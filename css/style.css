@@ -1,0 +1,432 @@
+:root {
+  --bg: #ffffff;
+  --text: #171717;
+  --muted: #5f5f5a;
+  --line: rgba(23, 23, 23, 0.14);
+  --panel-gap-x: clamp(2rem, 4vw, 4.5rem);
+  --panel-gap-y: clamp(3.75rem, 8vw, 6rem);
+  --tile-width: minmax(0, 1fr);
+  --site-header-pt: clamp(0.65rem, 1.6vw, 1rem);
+  --site-header-pb: clamp(0.55rem, 1.4vw, 0.85rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: "IBM Plex Mono", monospace;
+  background: var(--bg);
+  padding-left: max(0px, env(safe-area-inset-left));
+  padding-right: max(0px, env(safe-area-inset-right));
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+button,
+a {
+  color: inherit;
+  font: inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+.site-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: var(--site-header-pt) clamp(0.75rem, 3vw, 1.25rem) var(--site-header-pb);
+  box-sizing: border-box;
+}
+
+.site-title-image {
+  width: clamp(4.25rem, 7.5vw, 5.5rem);
+  max-width: 88px;
+  height: auto;
+}
+
+.site-frame {
+  --star-layer-top: clamp(6px, 1vw, 12px);
+  /* Symmetric inset inside each star “cell” (projects only) */
+  --cell-inset: clamp(12px, 1.8vw, 22px);
+  display: grid;
+  grid-template-columns: clamp(40px, 3.6vw, 52px) minmax(0, 1fr);
+  /* Breathing room between rail and project grid */
+  column-gap: clamp(18px, 2.8vw, 44px);
+  min-height: 100vh;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: clamp(8px, 1vw, 14px) clamp(8px, 1.5vw, 16px) 2rem
+    clamp(14px, 2.4vw, 32px);
+  align-items: start;
+  box-sizing: border-box;
+}
+
+.left-rail {
+  position: sticky;
+  top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  justify-self: start;
+  align-self: start;
+  min-height: calc(100vh - 6rem);
+  /* Lamp / mark lines up with top row of grid stars (not image band) */
+  padding: var(--star-layer-top) 0 0 0;
+}
+
+.rail-mark {
+  display: inline-flex;
+  width: clamp(26px, 2.4vw, 34px);
+}
+
+.rail-mark img {
+  width: 100%;
+  height: auto;
+}
+
+.rail-nav {
+  display: grid;
+  gap: 0.15rem;
+  justify-items: start;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.nav-link {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font-size: clamp(0.78rem, 1.1vw, 0.86rem);
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-color: transparent;
+}
+
+.nav-link.is-active {
+  text-decoration-color: currentColor;
+}
+
+.page {
+  /* Wide empty band on the right like ommolette (~1.5 grid columns) */
+  padding: 0 clamp(5rem, 20vw, 15rem) 0 0;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.panel {
+  display: none;
+}
+
+.panel.is-active {
+  display: block;
+}
+
+.layout-grid {
+  /* Three even project columns + intro; wider gutters incl. before Hello */
+  --col-abc: clamp(188px, 15.5vw, 278px);
+  --col-a: var(--col-abc);
+  --col-b: var(--col-abc);
+  --col-c: var(--col-abc);
+  --col-d: clamp(142px, 11.5vw, 196px);
+  --gap-x: clamp(42px, 4vw, 76px);
+  --row-gap: clamp(48px, 4.8vw, 72px);
+  --line-x1: 0px;
+  --line-x2: calc(var(--col-a) + var(--gap-x));
+  --line-x3: calc(var(--line-x2) + var(--col-b) + var(--gap-x));
+  --line-x4: calc(var(--line-x3) + var(--col-c) + var(--gap-x));
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--col-a) var(--col-b) var(--col-c) var(--col-d);
+  column-gap: var(--gap-x);
+  row-gap: var(--row-gap);
+  align-items: start;
+  justify-content: start;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding: var(--star-layer-top) 0 0;
+  box-sizing: border-box;
+}
+
+.grid-stars {
+  position: absolute;
+  top: var(--star-layer-top);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.grid-star {
+  position: absolute;
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-left: -0.9rem;
+  margin-top: -0.9rem;
+  color: #181818;
+  transform-origin: center;
+  transition: transform 160ms ease;
+  top: calc((var(--sy) - 1) * (100% / 3));
+}
+
+.grid-star[data-star*="-c1"] {
+  left: var(--line-x1);
+}
+
+.grid-star[data-star*="-c2"] {
+  left: var(--line-x2);
+}
+
+.grid-star[data-star*="-c3"] {
+  left: var(--line-x3);
+}
+
+.grid-star[data-star*="-c4"] {
+  left: var(--line-x4);
+}
+
+.grid-star::before {
+  content: "✧";
+  display: block;
+  font-size: 1.72rem;
+  line-height: 1;
+}
+
+.grid-star.is-active::before {
+  content: "✦";
+}
+
+.grid-star.is-active {
+  transform: scale(1.08);
+}
+
+.project-slot,
+.intro-block,
+.tag-block {
+  grid-column: var(--col);
+  grid-row: var(--row);
+}
+
+.project-slot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  justify-self: stretch;
+  align-self: stretch;
+  width: 100%;
+  min-height: clamp(176px, 17vw, 236px);
+  padding: var(--cell-inset, clamp(12px, 1.8vw, 22px));
+  box-sizing: border-box;
+}
+
+.project-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: min(92%, clamp(198px, 88%, 304px));
+  margin: 0;
+  transition: transform 220ms ease;
+}
+
+.project-slot:hover .project-tile,
+.project-slot:focus-within .project-tile {
+  transform: translateY(-4px);
+}
+
+.project-tile img {
+  width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.08));
+}
+
+.tilt-left img {
+  transform: rotate(-10deg);
+}
+
+.spread-left img {
+  transform: rotate(-7deg);
+}
+
+.small-square {
+  min-height: clamp(168px, 16vw, 210px);
+}
+
+.small-portrait {
+  min-height: clamp(168px, 16vw, 210px);
+}
+
+.wide-image {
+  min-height: clamp(176px, 17vw, 220px);
+}
+
+.wide-image .project-tile {
+  max-width: min(94%, clamp(212px, 91%, 318px));
+}
+
+.small-square .project-tile {
+  max-width: min(88%, clamp(172px, 82%, 234px));
+}
+
+.small-portrait .project-tile {
+  max-width: min(86%, clamp(158px, 78%, 218px));
+}
+
+.tilt-left .project-tile,
+.spread-left .project-tile {
+  transform-origin: center;
+}
+
+.intro-block,
+.tag-block,
+.text-panel {
+  max-width: clamp(148px, 12vw, 172px);
+  color: #1a1a1a;
+  font-size: clamp(0.78rem, 1.05vw, 0.84rem);
+  line-height: 1.38;
+}
+
+.intro-block h2,
+.text-panel h2 {
+  margin: 0 0 0.15rem;
+  color: var(--text);
+  font-size: clamp(0.78rem, 1.05vw, 0.84rem);
+  font-weight: 500;
+}
+
+.intro-block p,
+.tag-block p,
+.text-panel p {
+  margin: 0 0 0.34rem;
+}
+
+.tag-block strong {
+  color: var(--text);
+}
+
+.intro-block {
+  /* Top aligns with first row of stars (same band as sy=1); gutter vs col 3 from --gap-x */
+  padding-top: 0;
+  padding-left: clamp(6px, 1vw, 14px);
+  align-self: start;
+  box-sizing: border-box;
+}
+
+.text-panel {
+  padding: 1rem 0 0;
+}
+
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  padding-top: 1rem;
+}
+
+.mini-grid img {
+  width: 100%;
+  max-width: 200px;
+  justify-self: start;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.08));
+}
+
+.about-panel a {
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+@media (max-width: 1100px) {
+  .site-frame {
+    grid-template-columns: 1fr;
+    width: 100%;
+    padding-left: clamp(10px, 3vw, 18px);
+    padding-right: clamp(10px, 3vw, 18px);
+    padding-top: 0;
+  }
+
+  .left-rail {
+    position: static;
+    height: auto;
+    min-height: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1.25rem 0;
+  }
+
+  .rail-nav {
+    grid-auto-flow: column;
+    gap: 1rem;
+  }
+
+  .page {
+    padding: 0 1.25rem 2rem;
+  }
+
+  .layout-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: none;
+  }
+
+  .grid-stars {
+    display: none;
+  }
+
+  .project-slot,
+  .intro-block,
+  .tag-block {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+}
+
+@media (max-width: 700px) {
+  .site-header {
+    justify-content: center;
+    padding-top: 0.65rem;
+  }
+
+  .site-title-image {
+    width: min(100%, 5.25rem);
+    max-width: 84px;
+  }
+
+  .layout-grid,
+  .mini-grid {
+    grid-template-columns: 1fr;
+    row-gap: 2.5rem;
+  }
+
+  .project-slot,
+  .intro-block,
+  .tag-block,
+  .text-panel {
+    max-width: none;
+    width: 100%;
+  }
+
+  .project-tile img {
+    transform: none;
+  }
+}
