@@ -20,7 +20,7 @@
     <header class="site-header">
       <img
         class="site-title-image"
-        src="./assets/images/projects/chloe2.png"
+        src="./image/homepagework/chloe2.png"
         alt="Chloe"
       />
     </header>
@@ -28,16 +28,29 @@
     <div class="site-frame">
       <aside class="left-rail">
         <a class="rail-mark" href="#top" aria-label="Back to top">
-          <img src="./assets/images/projects/deng.png" alt="Lamp mark" />
+          <img src="./image/homepagework/deng.png" alt="Lamp mark" />
         </a>
 
         <nav class="rail-nav" aria-label="Primary">
           <button class="nav-link is-active" type="button" data-panel="work">
             work
           </button>
-          <button class="nav-link" type="button" data-panel="other">
-            other
-          </button>
+          <div class="nav-group nav-group-other">
+            <button class="nav-link" type="button" data-panel="other">
+              other
+            </button>
+            <div class="rail-subnav" data-panel-subnav="other" aria-label="Other categories">
+              <button class="subnav-link is-current" type="button" data-other-category="illustration">
+                Illustration
+              </button>
+              <button class="subnav-link" type="button" data-other-category="design">
+                Design
+              </button>
+              <button class="subnav-link" type="button" data-other-category="ip">
+                IP
+              </button>
+            </div>
+          </div>
           <button class="nav-link" type="button" data-panel="about">
             about
           </button>
@@ -46,186 +59,569 @@
 
       <main class="page" id="top">
         <section class="panel is-active" id="panel-work" data-panel="work">
-          <div class="layout-grid">
-            <div class="grid-stars" aria-hidden="true">
-              <span class="grid-star" data-star="r1-c1" style="--sx: 1; --sy: 1"></span>
-              <span class="grid-star" data-star="r1-c2" style="--sx: 2; --sy: 1"></span>
-              <span class="grid-star" data-star="r1-c3" style="--sx: 3; --sy: 1"></span>
-              <span class="grid-star" data-star="r1-c4" style="--sx: 4; --sy: 1"></span>
-              <span class="grid-star" data-star="r2-c1" style="--sx: 1; --sy: 2"></span>
-              <span class="grid-star" data-star="r2-c2" style="--sx: 2; --sy: 2"></span>
-              <span class="grid-star" data-star="r2-c3" style="--sx: 3; --sy: 2"></span>
-              <span class="grid-star" data-star="r2-c4" style="--sx: 4; --sy: 2"></span>
-              <span class="grid-star" data-star="r3-c1" style="--sx: 1; --sy: 3"></span>
-              <span class="grid-star" data-star="r3-c2" style="--sx: 2; --sy: 3"></span>
-              <span class="grid-star" data-star="r3-c3" style="--sx: 3; --sy: 3"></span>
-              <span class="grid-star" data-star="r3-c4" style="--sx: 4; --sy: 3"></span>
-              <span class="grid-star" data-star="r4-c1" style="--sx: 1; --sy: 4"></span>
-              <span class="grid-star" data-star="r4-c2" style="--sx: 2; --sy: 4"></span>
-              <span class="grid-star" data-star="r4-c3" style="--sx: 3; --sy: 4"></span>
-              <span class="grid-star" data-star="r4-c4" style="--sx: 4; --sy: 4"></span>
+          <div class="work-view">
+            <div class="layout-grid">
+              <div class="grid-stars" aria-hidden="true">
+                <span class="grid-star" data-star="r1-c1" style="--sx: 1; --sy: 1"></span>
+                <span class="grid-star" data-star="r1-c2" style="--sx: 2; --sy: 1"></span>
+                <span class="grid-star" data-star="r1-c3" style="--sx: 3; --sy: 1"></span>
+                <span class="grid-star" data-star="r1-c4" style="--sx: 4; --sy: 1"></span>
+                <span class="grid-star" data-star="r2-c1" style="--sx: 1; --sy: 2"></span>
+                <span class="grid-star" data-star="r2-c2" style="--sx: 2; --sy: 2"></span>
+                <span class="grid-star" data-star="r2-c3" style="--sx: 3; --sy: 2"></span>
+                <span class="grid-star" data-star="r2-c4" style="--sx: 4; --sy: 2"></span>
+                <span class="grid-star" data-star="r3-c1" style="--sx: 1; --sy: 3"></span>
+                <span class="grid-star" data-star="r3-c2" style="--sx: 2; --sy: 3"></span>
+                <span class="grid-star" data-star="r3-c3" style="--sx: 3; --sy: 3"></span>
+                <span class="grid-star" data-star="r3-c4" style="--sx: 4; --sy: 3"></span>
+                <span class="grid-star" data-star="r4-c1" style="--sx: 1; --sy: 4"></span>
+                <span class="grid-star" data-star="r4-c2" style="--sx: 2; --sy: 4"></span>
+                <span class="grid-star" data-star="r4-c3" style="--sx: 3; --sy: 4"></span>
+                <span class="grid-star" data-star="r4-c4" style="--sx: 4; --sy: 4"></span>
+              </div>
+
+              <article
+                class="project-slot tilt-left"
+                style="--col: 1; --row: 1"
+                data-stars="r1-c1 r1-c2 r2-c1 r2-c2"
+              >
+                <div class="project-tile">
+                  <img
+                    src="./image/homepagework/sanamockup.png"
+                    alt="Sana mobile interface mockup"
+                  />
+                </div>
+              </article>
+
+              <article
+                class="project-slot"
+                style="--col: 2; --row: 1"
+                data-stars="r1-c2 r1-c3 r2-c2 r2-c3"
+              >
+                <a
+                  class="project-card-link"
+                  href="./neuroma.html"
+                  data-project-link
+                  aria-label="Open Neuroma scented candle packaging project page"
+                >
+                  <div class="project-tile">
+                    <img
+                      src="./image/homepagework/neuromamainpage.png"
+                      alt="Neuroma packaging project"
+                    />
+                  </div>
+                </a>
+              </article>
+
+              <article
+                class="project-slot"
+                style="--col: 3; --row: 1"
+                data-stars="r1-c3 r1-c4 r2-c3 r2-c4"
+              >
+                <a
+                  class="project-card-link"
+                  href="./petbrand.html"
+                  data-project-link
+                  aria-label="Open Tails and Treats branding project page"
+                >
+                  <div class="project-tile">
+                    <img
+                      src="./image/homepagework/brandingmainpage.png"
+                      alt="Tails and Treats storefront branding"
+                    />
+                  </div>
+                </a>
+              </article>
+
+              <article
+                class="project-slot tilt-left"
+                style="--col: 1; --row: 2"
+                data-stars="r2-c1 r2-c2 r3-c1 r3-c2"
+              >
+                <a
+                  class="project-card-link"
+                  href="./moodish.html"
+                  data-project-link
+                  aria-label="Open Moodish project page"
+                >
+                  <div class="project-tile">
+                    <img
+                      src="./image/homepagework/moodishmockup.png"
+                      alt="Moodish mobile app mockup"
+                    />
+                  </div>
+                </a>
+              </article>
+
+              <article
+                class="project-slot"
+                style="--col: 2; --row: 2"
+                data-stars="r2-c2 r2-c3 r3-c2 r3-c3"
+              >
+                <a
+                  class="project-card-link"
+                  href="./mintmarket.html"
+                  data-project-link
+                  aria-label="Open MintMarket project page"
+                >
+                  <div class="project-tile">
+                    <img
+                      src="./image/homepagework/mintmarketmainpage.png"
+                      alt="Mint Market campaign image"
+                    />
+                  </div>
+                </a>
+              </article>
+
+              <article
+                class="project-slot wide-image"
+                style="--col: 3; --row: 2"
+                data-stars="r2-c3 r2-c4 r3-c3 r3-c4"
+              >
+                <a
+                  class="project-card-link"
+                  href="./can.html"
+                  data-project-link
+                  aria-label="Open Soda Can Package Design project page"
+                >
+                  <div class="project-tile">
+                    <img
+                      src="./image/homepagework/canmainpage.png"
+                      alt="Devi sparkling can branding"
+                    />
+                  </div>
+                </a>
+              </article>
+
+              <article
+                class="project-slot spread-left"
+                style="--col: 1; --row: 3"
+                data-stars="r3-c1 r3-c2 r4-c1 r4-c2"
+              >
+                <a
+                  class="project-card-link"
+                  href="./childrensbook.html"
+                  data-project-link
+                  aria-label="Open children's book project page"
+                >
+                  <div class="project-tile">
+                    <img
+                      src="./image/homepagework/childrensbookmain.png"
+                      alt="Children illustration project"
+                    />
+                  </div>
+                </a>
+              </article>
+
+              <article
+                class="project-slot small-square"
+                style="--col: 2; --row: 3"
+                data-stars="r3-c2 r3-c3 r4-c2 r4-c3"
+              >
+                <a
+                  class="project-card-link"
+                  href="./avantgarde.html"
+                  data-project-link
+                  aria-label="Open Avant Garde type book project page"
+                >
+                  <div class="project-tile">
+                    <img
+                      src="./image/homepagework/avant.png"
+                      alt="Type book cover"
+                    />
+                  </div>
+                </a>
+              </article>
+
+              <article
+                class="project-slot small-portrait"
+                style="--col: 3; --row: 3"
+                data-stars="r3-c3 r3-c4 r4-c3 r4-c4"
+              >
+                <a
+                  class="project-card-link"
+                  href="./booklet.html"
+                  data-project-link
+                  aria-label="Open booklet illustration project page"
+                >
+                  <div class="project-tile">
+                    <img
+                      src="./image/homepagework/bookletdesign.png"
+                      alt="Booklet cover layout"
+                    />
+                  </div>
+                </a>
+              </article>
             </div>
 
-            <article
-              class="project-slot tilt-left"
-              style="--col: 1; --row: 1"
-              data-stars="r1-c1 r1-c2 r2-c1 r2-c2"
-            >
-              <div class="project-tile">
-                <img
-                  src="./assets/images/projects/sanamockup.png"
-                  alt="Sana mobile interface mockup"
-                />
-              </div>
-            </article>
-
-            <article
-              class="project-slot"
-              style="--col: 2; --row: 1"
-              data-stars="r1-c2 r1-c3 r2-c2 r2-c3"
-            >
-              <div class="project-tile">
-                <img
-                  src="./assets/images/projects/neuromamainpage.png"
-                  alt="Neuroma packaging project"
-                />
-              </div>
-            </article>
-
-            <article
-              class="project-slot"
-              style="--col: 3; --row: 1"
-              data-stars="r1-c3 r1-c4 r2-c3 r2-c4"
-            >
-              <div class="project-tile">
-                <img
-                  src="./assets/images/projects/brandingmainpage.png"
-                  alt="Tails and Treats storefront branding"
-                />
-              </div>
-            </article>
-
-            <section class="intro-block" style="--col: 4; --row: 1">
-              <h2>Hello there !</h2>
-              <p>I'm Chloe Wang,</p>
+            <section class="intro-block" aria-label="Introduction">
+              <h2>Hi ^^!! ⟡.·</h2>
+              <p>
+                I'm Chloe, an illustration and UI/UX designer based in LA and
+                Shenzhen. My work moves between visual storytelling, branding,
+                and human-centered interactive design, shaped by research,
+                curiosity, and interdisciplinary making.
+              </p>
             </section>
-
-            <article
-              class="project-slot tilt-left"
-              style="--col: 1; --row: 2"
-              data-stars="r2-c1 r2-c2 r3-c1 r3-c2"
-            >
-              <div class="project-tile">
-                <img
-                  src="./assets/images/projects/moodishmockup.png"
-                  alt="Moodish mobile app mockup"
-                />
-              </div>
-            </article>
-
-            <article
-              class="project-slot"
-              style="--col: 2; --row: 2"
-              data-stars="r2-c2 r2-c3 r3-c2 r3-c3"
-            >
-              <div class="project-tile">
-                <img
-                  src="./assets/images/projects/mintmarketmainpage.png"
-                  alt="Mint Market campaign image"
-                />
-              </div>
-            </article>
-
-            <article
-              class="project-slot wide-image"
-              style="--col: 3; --row: 2"
-              data-stars="r2-c3 r2-c4 r3-c3 r3-c4"
-            >
-              <div class="project-tile">
-                <img
-                  src="./assets/images/projects/canmainpage.png"
-                  alt="Devi sparkling can branding"
-                />
-              </div>
-            </article>
-
-            <article
-              class="project-slot spread-left"
-              style="--col: 1; --row: 3"
-              data-stars="r3-c1 r3-c2 r4-c1 r4-c2"
-            >
-              <div class="project-tile">
-                <img
-                  src="./assets/images/projects/childrenmainpage.png"
-                  alt="Children illustration project"
-                />
-              </div>
-            </article>
-
-            <article
-              class="project-slot small-square"
-              style="--col: 2; --row: 3"
-              data-stars="r3-c2 r3-c3 r4-c2 r4-c3"
-            >
-              <div class="project-tile">
-                <img
-                  src="./assets/images/projects/typebookmainpage.png"
-                  alt="Type book cover"
-                />
-              </div>
-            </article>
-
-            <article
-              class="project-slot small-portrait"
-              style="--col: 3; --row: 3"
-              data-stars="r3-c3 r3-c4 r4-c3 r4-c4"
-            >
-              <div class="project-tile">
-                <img
-                  src="./assets/images/projects/bookletmainpage.png"
-                  alt="Booklet cover layout"
-                />
-              </div>
-            </article>
-
           </div>
         </section>
 
         <section class="panel" id="panel-other" data-panel="other">
-          <div class="text-panel">
-            <h2>Other</h2>
-            <p>
-              This section can hold process snippets, experiments, posters,
-              in-progress typography studies, or smaller illustrations that do not
-              belong in the main grid.
-            </p>
-            <div class="mini-grid">
-              <img src="./assets/images/projects/childrenmainpage.png" alt="Children project" />
-              <img src="./assets/images/projects/typebookmainpage.png" alt="Type book" />
-              <img src="./assets/images/projects/bookletmainpage.png" alt="Booklet" />
-            </div>
+          <div class="other-page">
+            <section
+              class="other-category-panel is-active"
+              id="other-illustration"
+              data-other-category-panel="illustration"
+            >
+              <h2 class="visually-hidden">Illustration</h2>
+
+              <div class="other-row other-row-4 other-row-top">
+                <figure class="other-card">
+                  <img src="./image/otherillustration/standard.jpg" alt="Standard digital drawing" />
+                  <figcaption class="other-caption">
+                    <h3>Standard</h3>
+                    <p>digital drawing</p>
+                    <p>2022.12.20</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="other-card">
+                  <img src="./image/otherillustration/body.jpg" alt="Body digital drawing" />
+                  <figcaption class="other-caption">
+                    <h3>Body</h3>
+                    <p>digital drawing</p>
+                    <p>2022.12.10</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="other-card">
+                  <img src="./image/otherillustration/watch listen，hear.jpg" alt="Watch, listen, hear digital drawing" />
+                  <figcaption class="other-caption">
+                    <h3>Watch, listen, hear</h3>
+                    <p>digital drawing</p>
+                    <p>2022.12.20</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="other-card other-card-born">
+                  <img src="./image/otherillustration/born.png" alt="Born digital drawing" />
+                  <figcaption class="other-caption">
+                    <h3>born</h3>
+                    <p>digital drawing</p>
+                    <p>2023.4.5</p>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <div class="other-row other-row-4">
+                <figure class="other-card">
+                  <img src="./image/otherillustration/portrait.jpg" alt="Portrait oil painting" />
+                  <figcaption class="other-caption">
+                    <h3>Portrait</h3>
+                    <p>Oil Painting</p>
+                    <p>2023.4.12</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="other-card">
+                  <img src="./image/otherillustration/me.jpg" alt="Me oil painting" />
+                  <figcaption class="other-caption">
+                    <h3>Me</h3>
+                    <p>Oil Painting</p>
+                    <p>2023.4.17</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="other-card">
+                  <img src="./image/otherillustration/brokenheart.JPG" alt="Broken heart oil pastel artwork" />
+                  <figcaption class="other-caption">
+                    <h3>Broken heart</h3>
+                    <p>Oil pastel</p>
+                    <p>2024.10.15</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="other-card">
+                  <img src="./image/otherillustration/hug.JPG" alt="Hug pastel artwork" />
+                  <figcaption class="other-caption">
+                    <h3>Hug</h3>
+                    <p>Pastel</p>
+                    <p>2024.10.20</p>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <div class="other-row other-row-3">
+                <figure class="other-card">
+                  <img src="./image/otherillustration/cat.JPG" alt="Cat pen drawing" />
+                  <figcaption class="other-caption">
+                    <h3>Cat</h3>
+                    <p>Pen drawing</p>
+                    <p>2023.9.18</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="other-card">
+                  <img src="./image/otherillustration/heidi.jpg" alt="Heidi pen drawing" />
+                  <figcaption class="other-caption">
+                    <h3>Heidi</h3>
+                    <p>Pen drawing</p>
+                    <p>2024.11.28</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="other-card">
+                  <img src="./image/otherillustration/missingforest.JPG" alt="Missing forest pen drawing" />
+                  <figcaption class="other-caption">
+                    <h3>Missing forest</h3>
+                    <p>Pen drawing</p>
+                    <p>2024.12.17</p>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <div class="other-feature-row">
+                <figure class="other-feature-main">
+                  <img src="./image/otherillustration/chloeanddog0.png" alt="Chloe and her wonder dogs watercolor sheet" />
+                </figure>
+
+                <figure class="other-feature-side">
+                  <div class="other-dogs-grid" aria-label="Chloe and her wonder dogs process">
+                    <img class="dogs-sketch" src="./image/otherillustration/chloeanddog1.png" alt="Chloe and her wonder dogs sketches" />
+                    <img class="dogs-object" src="./image/otherillustration/chloeanddog2.png" alt="Chloe and her wonder dogs object mockup" />
+                    <img class="dogs-process" src="./image/otherillustration/chloeanddog3.png" alt="Chloe and her wonder dogs process photos" />
+                  </div>
+                  <figcaption class="other-caption">
+                    <h3>Chloe and her wonder dogs</h3>
+                    <p>Watercolor</p>
+                    <p>2022.2.25</p>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <div class="other-row other-row-4 other-row-photo">
+                <figure class="other-card">
+                  <img src="./image/otherillustration/inside.JPG" alt="Inside digital drawing" />
+                  <figcaption class="other-caption">
+                    <h3>Inside</h3>
+                    <p>digital drawing</p>
+                    <p>2024.1.23</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="other-card">
+                  <img src="./image/otherillustration/outside.JPG" alt="Outside digital drawing" />
+                  <figcaption class="other-caption">
+                    <h3>Outside</h3>
+                    <p>digital drawing</p>
+                    <p>2024.11.23</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="other-card">
+                  <img src="./image/otherillustration/muti.jpg" alt="Muti digital drawing" />
+                  <figcaption class="other-caption">
+                    <h3>Muti</h3>
+                    <p>digital drawing</p>
+                    <p>2024.11.25</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="other-card other-card-photo">
+                  <img src="./image/otherillustration/photo.png" alt="Photo digital drawing" />
+                  <figcaption class="other-caption">
+                    <h3>Photo</h3>
+                    <p>digital drawing</p>
+                    <p>2022.10.2</p>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <div class="other-row other-row-2 other-row-bottom">
+                <figure class="other-card other-card-wide">
+                  <img src="./image/otherillustration/silentspring 2.png" alt="Intro page illustration" />
+                  <figcaption class="other-caption">
+                    <h3>Intro page illustration</h3>
+                    <p>digital drawing</p>
+                    <p>2024.2.3</p>
+                  </figcaption>
+                </figure>
+
+                <figure class="other-card other-card-wide other-card-education">
+                  <img src="./image/otherillustration/beeeducation 2.png" alt="Education illustration" />
+                  <figcaption class="other-caption">
+                    <h3>Education illustration</h3>
+                    <p>digital drawing</p>
+                    <p>2024.1.20</p>
+                  </figcaption>
+                </figure>
+              </div>
+            </section>
+
+            <section class="other-category-panel" data-other-category-panel="design">
+              <h2 class="visually-hidden">Design</h2>
+
+              <div class="design-page">
+                <article class="design-project">
+                  <div class="design-system-grid">
+                    <img src="./image/otherdesign/blackmain.png" alt="Bunny branding board" />
+                    <img src="./image/otherdesign/blacktotal.png" alt="Bunny branding applications" />
+                  </div>
+                  <div class="other-caption design-project-caption">
+                    <h3>Bunny</h3>
+                    <p>branding system</p>
+                  </div>
+                </article>
+
+                <article class="design-project">
+                  <div class="design-system-grid">
+                    <img src="./image/otherdesign/pinkmain.png" alt="Softlight branding board" />
+                    <img src="./image/otherdesign/pinktotal.png" alt="Softlight branding applications" />
+                  </div>
+                  <div class="other-caption design-project-caption">
+                    <h3>Softlight</h3>
+                    <p>branding system</p>
+                  </div>
+                </article>
+
+                <article class="design-project">
+                  <div class="design-poster-grid">
+                    <img src="./image/otherdesign/TypePosterblack.png" alt="Black typography poster" />
+                    <img src="./image/otherdesign/TypePosteryellow.png" alt="Yellow typography poster" />
+                  </div>
+                  <div class="other-caption design-project-caption">
+                    <h3>Type Poster</h3>
+                    <p>poster design</p>
+                  </div>
+                </article>
+
+                <article class="design-project">
+                  <div class="design-color-grid">
+                    <img src="./image/otherdesign/color-05.png" alt="Type practice graphic study 1" />
+                    <img src="./image/otherdesign/color-08.png" alt="Type practice graphic study 2" />
+                    <img src="./image/otherdesign/color-10.png" alt="Type practice graphic study 3" />
+                    <img src="./image/otherdesign/color-11.png" alt="Type practice graphic study 4" />
+                    <img src="./image/otherdesign/color-12.png" alt="Type practice graphic study 5" />
+                    <img src="./image/otherdesign/color-13.png" alt="Type practice graphic study 6" />
+                    <img src="./image/otherdesign/color-18.png" alt="Type practice graphic study 7" />
+                    <img src="./image/otherdesign/color-19.png" alt="Type practice graphic study 8" />
+                  </div>
+                  <div class="other-caption design-project-caption">
+                    <h3>Type Practice</h3>
+                    <p>typography study</p>
+                  </div>
+                </article>
+
+                <article class="design-project">
+                  <div class="design-album-grid">
+                    <img src="./image/otherdesign/pohoto-01.png" alt="Album practice layout 1" />
+                    <img src="./image/otherdesign/pohoto-03.png" alt="Album practice layout 2" />
+                    <img src="./image/otherdesign/pohoto-04.png" alt="Album practice layout 3" />
+                    <img src="./image/otherdesign/pohoto-09.png" alt="Album practice layout 4" />
+                    <img src="./image/otherdesign/pohoto-12.png" alt="Album practice layout 5" />
+                    <img src="./image/otherdesign/pohoto-14.png" alt="Album practice layout 6" />
+                  </div>
+                  <div class="other-caption design-project-caption">
+                    <h3>Album Practice</h3>
+                    <p>editorial design</p>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section class="other-category-panel" data-other-category-panel="ip">
+              <h2 class="visually-hidden">IP</h2>
+
+              <div class="ip-page">
+                <section class="ip-hero">
+                  <img src="./image/otherip/Frame 182.png" alt="NemoZ character world and plush lineup" />
+                  <p class="ip-note">Rednotes: @NemoZ</p>
+                </section>
+
+                <section class="ip-intro">
+                  <p>
+                    NemoZ is a cosmic idol group formed after the members met through a comet explosion.
+                    The group consists of five members and is currently active on Earth and the planet Mutra.
+                    Based on this, we plan to expand our activities across the entire galaxy.
+                  </p>
+                </section>
+
+                <section class="ip-showcase-row">
+                  <img src="./image/otherip/image 75.png" alt="NemoZ four-character portrait set" />
+                  <img src="./image/otherip/image 76.png" alt="NemoZ wallpaper set" />
+                  <img src="./image/otherip/image 80.png" alt="NemoZ phone wallpaper mockup" />
+                </section>
+
+                <section class="ip-merch-row">
+                  <div class="ip-merch-grid">
+                    <img src="./image/otherip/image 77.png" alt="NemoZ badge pair" />
+                    <img src="./image/otherip/image 78.png" alt="NemoZ duo character card" />
+                    <img src="./image/otherip/image 83.png" alt="NemoZ merchandise spread" />
+                    <img src="./image/otherip/image 82.png" alt="NemoZ phone case mockup" />
+                  </div>
+                  <img class="ip-merch-feature" src="./image/otherip/image 79.png" alt="NemoZ merchandise setup photo" />
+                </section>
+
+                <section class="ip-logo-section">
+                  <img src="./image/otherip/Frame 188.png" alt="NeuRoma logo and character family" />
+                </section>
+
+                <section class="ip-coming-row">
+                  <img src="./image/otherip/Image 1.png" alt="NeuRoma hand-drawn character" />
+                  <div class="ip-coming-feature">
+                    <img src="./image/otherip/image 81.png" alt="NeuRoma 3D character turnaround" />
+                    <p class="ip-coming-note">coming soon...</p>
+                  </div>
+                </section>
+              </div>
+            </section>
           </div>
         </section>
 
         <section class="panel" id="panel-about" data-panel="about">
-          <div class="text-panel about-panel">
-            <h2>About</h2>
-            <p>
-              Chloe Wang is a visual designer interested in image systems that feel
-              light, direct, and emotionally resonant. Her work moves across
-              packaging, editorial layout, branding, and digital surfaces.
-            </p>
-            <p>
-              This portfolio intentionally keeps the interface sparse so the work
-              sits in open space, closer to a visual index than a conventional
-              commercial website.
-            </p>
-            <p>
-              Contact: <a href="mailto:hello@chloewang.design">hello@chloewang.design</a>
-            </p>
+          <div class="about-panel" aria-labelledby="about-title">
+            <div class="about-copy">
+              <h2 class="visually-hidden" id="about-title">About</h2>
+
+              <p>
+                I'm Chloe Wang, a human-computer interaction researcher and
+                interdisciplinary designer. My practice blends interactive media,
+                biosensing, and material exploration to study how people feel,
+                remember, and relate across human and non-human worlds.
+              </p>
+
+              <p>
+                I prototype creative tools - from code-driven drawing systems and
+                mixed-reality sketches to personalized fabrication workflows - that
+                invite more fluid dialogues with machines.
+              </p>
+
+              <p>
+                Outside the lab, I'm also an illustrator, using algorithms,
+                generative methods, and physical computing to drive illustration
+                and art-making, turning technical processes into visual storytelling.
+              </p>
+
+              <div class="about-contact" aria-label="Contact information">
+                <p>[instagram] <a href="https://www.instagram.com/chloeww_art" target="_blank" rel="noreferrer">@chloeww_art</a></p>
+                <p>[email] <a href="mailto:Chloe.w0324@gmail.com">Chloe.w0324@gmail.com</a></p>
+                <p>[Wechat] -XyuuOvO</p>
+                <p>[TEL] 13143419306 / 626-686-2866</p>
+              </div>
+            </div>
+
+            <figure class="about-portrait">
+              <img src="./image/about/photo.png" alt="Portrait of Chloe Wang" />
+            </figure>
           </div>
         </section>
       </main>
+    </div>
+
+    <div class="lightbox" id="image-lightbox" hidden>
+      <button class="lightbox-backdrop" type="button" aria-label="Close image preview">
+        <img class="lightbox-image" alt="" />
+      </button>
     </div>
 
     <script src="./js/main.js"></script>

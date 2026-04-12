@@ -8,6 +8,7 @@
   --tile-width: minmax(0, 1fr);
   --site-header-pt: clamp(0.65rem, 1.6vw, 1rem);
   --site-header-pb: clamp(0.55rem, 1.4vw, 0.85rem);
+  --sticky-offset: clamp(4.15rem, 6.8vw, 5.2rem);
 }
 
 *,
@@ -47,28 +48,33 @@ a {
 }
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: var(--site-header-pt) clamp(0.75rem, 3vw, 1.25rem) var(--site-header-pb);
+  padding: clamp(0.35rem, 0.95vw, 0.6rem) clamp(0.75rem, 3vw, 1.25rem)
+    clamp(0.28rem, 0.8vw, 0.48rem);
+  background: var(--bg);
   box-sizing: border-box;
 }
 
 .site-title-image {
-  width: clamp(4.25rem, 7.5vw, 5.5rem);
-  max-width: 88px;
+  width: clamp(3.9rem, 6.9vw, 5rem);
+  max-width: 80px;
   height: auto;
 }
 
 .site-frame {
   --star-layer-top: clamp(6px, 1vw, 12px);
   /* Symmetric inset inside each star “cell” (projects only) */
-  --cell-inset: clamp(12px, 1.8vw, 22px);
+  --cell-inset: clamp(11px, 1.55vw, 20px);
   display: grid;
   grid-template-columns: clamp(40px, 3.6vw, 52px) minmax(0, 1fr);
   /* Breathing room between rail and project grid */
-  column-gap: clamp(18px, 2.8vw, 44px);
+  column-gap: clamp(32px, 4.2vw, 72px);
   min-height: 100vh;
   width: 100%;
   max-width: none;
@@ -81,10 +87,10 @@ a {
 
 .left-rail {
   position: sticky;
-  top: 1rem;
+  top: var(--sticky-offset);
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 1.05rem;
   justify-self: start;
   align-self: start;
   min-height: calc(100vh - 6rem);
@@ -94,7 +100,7 @@ a {
 
 .rail-mark {
   display: inline-flex;
-  width: clamp(26px, 2.4vw, 34px);
+  width: clamp(40px, 3.6vw, 56px);
 }
 
 .rail-mark img {
@@ -103,32 +109,162 @@ a {
 }
 
 .rail-nav {
-  display: grid;
-  gap: 0.15rem;
-  justify-items: start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
   padding-left: 0;
   margin-left: 0;
+}
+
+.nav-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+}
+
+.nav-link,
+.subnav-link {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.rail-subnav {
+  display: grid;
+  gap: 0.48rem;
+  margin-top: 0;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.2;
+  max-height: 0;
+  padding-top: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  filter: blur(2.6px);
+  transform: translateX(-1.05rem) translateY(-0.26rem) scaleY(0.86);
+  transform-origin: top left;
+  transition:
+    max-height 520ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    padding-top 380ms ease,
+    opacity 320ms ease,
+    filter 320ms ease,
+    transform 520ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 0ms linear 520ms;
+}
+
+.rail-subnav.is-active {
+  padding-top: 0.7rem;
+  max-height: 9rem;
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  filter: blur(0);
+  transform: translateX(0) translateY(0) scaleY(1);
+  transition:
+    max-height 560ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    padding-top 420ms ease,
+    opacity 360ms ease,
+    filter 300ms ease,
+    transform 560ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 0ms linear 0ms;
+}
+
+.rail-subnav a,
+.rail-subnav span,
+.subnav-link {
+  text-decoration: none;
+}
+
+.rail-subnav a.is-current,
+.rail-subnav span.is-current,
+.subnav-link.is-current {
+  color: var(--text);
+  opacity: 1;
+}
+
+.subnav-link {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: rgba(23, 23, 23, 0.48);
+  font: inherit;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  text-align: left;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(-1.15rem) translateY(-0.08rem);
+  transition:
+    color 220ms ease,
+    opacity 340ms ease,
+    transform 520ms cubic-bezier(0.18, 0.72, 0.2, 1);
+}
+
+.rail-subnav.is-active .subnav-link {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+}
+
+.rail-subnav.is-active .subnav-link:nth-child(1) {
+  transition-delay: 140ms;
+}
+
+.rail-subnav.is-active .subnav-link:nth-child(2) {
+  transition-delay: 260ms;
+}
+
+.rail-subnav.is-active .subnav-link:nth-child(3) {
+  transition-delay: 380ms;
+}
+
+.subnav-link:hover,
+.subnav-link:focus-visible {
+  color: var(--text);
+  outline: none;
+}
+
+@keyframes subnav-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-0.2rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .nav-link {
   border: 0;
   padding: 0;
   background: transparent;
+  color: rgba(23, 23, 23, 0.54);
   font-size: clamp(0.78rem, 1.1vw, 0.86rem);
   letter-spacing: 0.01em;
   cursor: pointer;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
   text-decoration: underline;
   text-underline-offset: 0.18em;
   text-decoration-color: transparent;
 }
 
 .nav-link.is-active {
+  color: var(--text);
   text-decoration-color: currentColor;
 }
 
 .page {
   /* Wide empty band on the right like ommolette (~1.5 grid columns) */
-  padding: 0 clamp(5rem, 20vw, 15rem) 0 0;
+  padding: 0 clamp(0.75rem, 3vw, 2rem) 0 0;
   max-width: 100%;
   min-width: 0;
 }
@@ -141,22 +277,31 @@ a {
   display: block;
 }
 
+.work-view {
+  display: grid;
+  grid-template-columns: max-content clamp(220px, 19vw, 320px);
+  column-gap: 0;
+  align-items: start;
+  justify-content: start;
+  width: fit-content;
+  max-width: 100%;
+}
+
 .layout-grid {
-  /* Three even project columns + intro; wider gutters incl. before Hello */
-  --col-abc: clamp(188px, 15.5vw, 278px);
+  /* Wider project columns; tighter star gutters so art reads larger */
+  --col-abc: clamp(232px, 19.5vw, 360px);
   --col-a: var(--col-abc);
   --col-b: var(--col-abc);
   --col-c: var(--col-abc);
-  --col-d: clamp(142px, 11.5vw, 196px);
-  --gap-x: clamp(42px, 4vw, 76px);
-  --row-gap: clamp(48px, 4.8vw, 72px);
+  --gap-x: clamp(22px, 2.2vw, 40px);
+  --row-gap: clamp(10px, 1.2vw, 18px);
   --line-x1: 0px;
   --line-x2: calc(var(--col-a) + var(--gap-x));
   --line-x3: calc(var(--line-x2) + var(--col-b) + var(--gap-x));
   --line-x4: calc(var(--line-x3) + var(--col-c) + var(--gap-x));
   position: relative;
   display: grid;
-  grid-template-columns: var(--col-a) var(--col-b) var(--col-c) var(--col-d);
+  grid-template-columns: var(--col-a) var(--col-b) var(--col-c);
   column-gap: var(--gap-x);
   row-gap: var(--row-gap);
   align-items: start;
@@ -164,7 +309,7 @@ a {
   width: fit-content;
   max-width: 100%;
   margin: 0;
-  padding: var(--star-layer-top) 0 0;
+  padding: var(--star-layer-top) var(--gap-x) 0 0;
   box-sizing: border-box;
 }
 
@@ -186,7 +331,11 @@ a {
   color: #181818;
   transform-origin: center;
   transition: transform 160ms ease;
-  top: calc((var(--sy) - 1) * (100% / 3));
+  top: calc((var(--sy) - 1) * (100% / 3) + var(--y-shift, 0px));
+}
+
+.grid-star[data-star^="r2-"] {
+  --y-shift: clamp(-14px, -1.1vw, -8px);
 }
 
 .grid-star[data-star*="-c1"] {
@@ -221,7 +370,6 @@ a {
 }
 
 .project-slot,
-.intro-block,
 .tag-block {
   grid-column: var(--col);
   grid-row: var(--row);
@@ -234,8 +382,9 @@ a {
   justify-self: stretch;
   align-self: stretch;
   width: 100%;
-  min-height: clamp(176px, 17vw, 236px);
-  padding: var(--cell-inset, clamp(12px, 1.8vw, 22px));
+  min-height: clamp(212px, 21vw, 296px);
+  padding: clamp(6px, 0.85vw, 12px) var(--cell-inset, clamp(11px, 1.55vw, 20px))
+    clamp(4px, 0.6vw, 10px);
   box-sizing: border-box;
 }
 
@@ -244,9 +393,14 @@ a {
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: min(92%, clamp(198px, 88%, 304px));
+  max-width: min(100%, clamp(280px, 100%, 440px));
   margin: 0;
   transition: transform 220ms ease;
+}
+
+.project-card-link {
+  display: block;
+  width: 100%;
 }
 
 .project-slot:hover .project-tile,
@@ -268,28 +422,54 @@ a {
   transform: rotate(-7deg);
 }
 
-.small-square {
-  min-height: clamp(168px, 16vw, 210px);
+/* Per-column rhythm (sizes need not match across the grid) */
+.project-slot[style*="--col: 1"] {
+  min-height: clamp(230px, 23vw, 320px);
 }
 
-.small-portrait {
-  min-height: clamp(168px, 16vw, 210px);
+.project-slot[style*="--col: 1"] .project-tile {
+  max-width: min(100%, clamp(300px, 100%, 460px));
 }
 
-.wide-image {
-  min-height: clamp(176px, 17vw, 220px);
+.project-slot[style*="--col: 2"] {
+  min-height: clamp(206px, 20.5vw, 286px);
 }
 
-.wide-image .project-tile {
-  max-width: min(94%, clamp(212px, 91%, 318px));
+.project-slot[style*="--col: 2"] .project-tile {
+  max-width: min(100%, clamp(270px, 98%, 420px));
 }
 
-.small-square .project-tile {
-  max-width: min(88%, clamp(172px, 82%, 234px));
+.project-slot[style*="--col: 3"] {
+  min-height: clamp(220px, 21.5vw, 304px);
 }
 
-.small-portrait .project-tile {
-  max-width: min(86%, clamp(158px, 78%, 218px));
+.project-slot[style*="--col: 3"] .project-tile {
+  max-width: min(100%, clamp(285px, 99%, 440px));
+}
+
+/* Variant slots (after column rules so shape tweaks win over column min-height) */
+.project-slot.wide-image {
+  min-height: clamp(232px, 23vw, 320px);
+}
+
+.project-slot.wide-image .project-tile {
+  max-width: min(100%, clamp(310px, 100%, 480px));
+}
+
+.project-slot.small-square {
+  min-height: clamp(196px, 19.25vw, 272px);
+}
+
+.project-slot.small-square .project-tile {
+  max-width: min(98%, clamp(262px, 97%, 420px));
+}
+
+.project-slot.small-portrait {
+  min-height: clamp(202px, 19.75vw, 278px);
+}
+
+.project-slot.small-portrait .project-tile {
+  max-width: min(97%, clamp(248px, 95%, 400px));
 }
 
 .tilt-left .project-tile,
@@ -302,16 +482,24 @@ a {
 .text-panel {
   max-width: clamp(148px, 12vw, 172px);
   color: #1a1a1a;
-  font-size: clamp(0.78rem, 1.05vw, 0.84rem);
-  line-height: 1.38;
+  font-size: clamp(0.72rem, 0.9vw, 0.78rem);
+  line-height: 1.32;
 }
 
-.intro-block h2,
 .text-panel h2 {
   margin: 0 0 0.15rem;
   color: var(--text);
   font-size: clamp(0.78rem, 1.05vw, 0.84rem);
   font-weight: 500;
+}
+
+.intro-block h2 {
+  margin: 0 0 0.5rem;
+  color: var(--text);
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
+  font-weight: 500;
+  line-height: 1.05;
+  transform: translateY(-0.08rem);
 }
 
 .intro-block p,
@@ -325,15 +513,393 @@ a {
 }
 
 .intro-block {
-  /* Top aligns with first row of stars (same band as sy=1); gutter vs col 3 from --gap-x */
-  padding-top: 0;
-  padding-left: clamp(6px, 1vw, 14px);
+  position: sticky;
+  top: var(--sticky-offset);
   align-self: start;
+  max-width: clamp(250px, 22vw, 340px);
+  padding-top: 0;
+  padding-left: clamp(28px, 4vw, 56px);
   box-sizing: border-box;
+}
+
+.intro-block p {
+  margin: 0;
+  max-width: 40ch;
 }
 
 .text-panel {
   padding: 1rem 0 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.other-page {
+  width: min(100%, 1140px);
+  margin: 0 auto;
+  padding-top: 0.35rem;
+}
+
+.other-category-panel {
+  display: none;
+}
+
+.other-category-panel.is-active {
+  display: block;
+}
+
+.other-row {
+  display: grid;
+  column-gap: clamp(1.25rem, 1.8vw, 1.8rem);
+  align-items: start;
+  width: 100%;
+}
+
+.other-row + .other-row,
+.other-feature-row + .other-row,
+.other-row + .other-feature-row {
+  margin-top: clamp(2.1rem, 3vw, 3rem);
+}
+
+.other-row-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.other-row-top,
+.other-row-photo {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.42fr);
+}
+
+.other-row-3 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.other-row-2 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.other-row-bottom {
+  align-items: end;
+}
+
+.other-card {
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto minmax(3.5rem, auto);
+  align-content: start;
+}
+
+.other-row-2 .other-card {
+  grid-column: span 2;
+}
+
+.other-card img,
+.other-born-grid img,
+.other-dogs-grid img {
+  width: 100%;
+  height: auto;
+}
+
+.other-card > img,
+.other-born-grid,
+.other-dogs-grid {
+  display: block;
+  background: transparent;
+  box-shadow: none;
+}
+
+.other-row-top .other-card > img,
+.other-row-photo .other-card > img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.other-row-top .other-card > img,
+.other-row-top .other-born-grid {
+  height: clamp(18rem, 26vw, 24.75rem);
+}
+
+.other-row-photo .other-card > img {
+  height: clamp(16.5rem, 22vw, 19.75rem);
+}
+
+.other-born-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px;
+  overflow: hidden;
+}
+
+.other-dogs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    "sketch object"
+    "process process";
+  gap: 0.9rem;
+  padding: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.dogs-sketch {
+  grid-area: sketch;
+}
+
+.dogs-object {
+  grid-area: object;
+}
+
+.dogs-process {
+  grid-area: process;
+}
+
+.other-feature-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  column-gap: clamp(1.6rem, 2.2vw, 2.4rem);
+  align-items: start;
+  width: 100%;
+}
+
+.other-feature-main,
+.other-feature-side {
+  margin: 0;
+}
+
+.other-feature-side .other-caption {
+  padding-top: 0.65rem;
+}
+
+.other-caption {
+  display: grid;
+  align-content: start;
+  gap: 0.02rem;
+  min-height: 3.95rem;
+  padding-top: 0.45rem;
+}
+
+.other-caption h3 {
+  margin: 0;
+  color: var(--text);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.other-caption p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.66rem;
+  line-height: 1.2;
+}
+
+.other-page img,
+.project-tile img,
+.mini-grid img {
+  cursor: zoom-in;
+}
+
+.design-page {
+  width: min(100%, 1040px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.9rem, 4vw, 4.6rem);
+}
+
+.design-project {
+  margin: 0;
+}
+
+.design-system-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(1.25rem, 2vw, 2.25rem);
+  align-items: start;
+}
+
+.design-poster-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 1.8vw, 1.9rem);
+  align-items: start;
+}
+
+.design-color-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.65rem, 1.25vw, 1rem);
+  align-items: start;
+}
+
+.design-album-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.8rem, 1.35vw, 1.15rem);
+  align-items: start;
+}
+
+.design-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: transparent;
+  box-shadow: none;
+}
+
+.design-project-caption {
+  width: min(15.5rem, 35%);
+  padding-top: 0.55rem;
+}
+
+.ip-page {
+  width: min(100%, 1020px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.7rem, 4vw, 4.8rem);
+}
+
+.ip-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: transparent;
+  box-shadow: none;
+}
+
+.ip-hero {
+  display: flex;
+  flex-direction: column;
+}
+
+.ip-note {
+  align-self: flex-end;
+  margin: 0;
+  padding-top: clamp(0.28rem, 0.7vw, 0.55rem);
+  padding-right: clamp(0.35rem, 0.7vw, 0.7rem);
+  color: var(--text);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(0.92rem, 1.35vw, 1.25rem);
+}
+
+.ip-intro {
+  display: flex;
+  justify-content: center;
+}
+
+.ip-intro p {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--text);
+  font-size: 0.78rem;
+  line-height: 1.24;
+  text-align: center;
+}
+
+.ip-showcase-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.88fr) minmax(0, 0.76fr);
+  gap: clamp(0.9rem, 1.6vw, 1.5rem);
+  align-items: start;
+}
+
+.ip-merch-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: clamp(1rem, 1.8vw, 1.75rem);
+  align-items: start;
+}
+
+.ip-merch-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.3vw, 1.15rem);
+  align-items: start;
+}
+
+.ip-merch-feature {
+  align-self: stretch;
+  height: 100%;
+}
+
+.ip-logo-section {
+  display: flex;
+  justify-content: center;
+}
+
+.ip-logo-section img {
+  width: min(100%, 760px);
+}
+
+.ip-coming-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(1.4rem, 2.2vw, 2.4rem);
+  align-items: end;
+}
+
+.ip-coming-feature {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.ip-coming-note {
+  margin: 0;
+  color: var(--text);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1rem, 1.35vw, 1.22rem);
+  text-align: right;
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
+
+.lightbox-backdrop {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.94);
+  cursor: zoom-out;
+}
+
+.lightbox-image {
+  max-width: min(92vw, 1300px);
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.other-empty-state {
+  display: grid;
+  place-items: center;
+  min-height: 40vh;
+  color: var(--muted);
+  font-size: 0.78rem;
 }
 
 .mini-grid {
@@ -350,12 +916,954 @@ a {
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.08));
 }
 
-.about-panel a {
-  text-decoration: underline;
-  text-underline-offset: 0.16em;
+.about-panel {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 690px) 330px;
+  column-gap: clamp(3rem, 7vw, 8rem);
+  align-items: start;
+  padding-top: clamp(1.4rem, 3vw, 2.6rem);
 }
 
-@media (max-width: 1100px) {
+.about-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #1b1b1b;
+  font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.22;
+}
+
+.about-copy p {
+  margin: 0;
+  max-width: 34ch;
+}
+
+.about-copy p + p {
+  margin-top: clamp(1.8rem, 3vw, 2.8rem);
+}
+
+.about-contact {
+  margin-top: clamp(2.6rem, 5vw, 4rem);
+  font-size: clamp(0.94rem, 1.25vw, 1.08rem);
+  line-height: 1.22;
+}
+
+.about-contact p + p {
+  margin-top: 0.1rem;
+}
+
+.about-panel a {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.about-portrait {
+  width: 330px;
+  margin: 0;
+  justify-self: start;
+}
+
+.about-portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.project-detail-body {
+  font-family: "Cormorant Garamond", serif;
+}
+
+.project-detail-body .site-frame {
+  grid-template-columns: clamp(44px, 4vw, 58px) minmax(0, 1fr);
+  column-gap: clamp(2.4rem, 4vw, 4.4rem);
+  padding: clamp(6px, 1vw, 12px) clamp(20px, 3vw, 34px) 2.5rem
+    clamp(18px, 2.6vw, 30px);
+}
+
+.project-detail-body .left-rail {
+  gap: 1.05rem;
+  padding-top: clamp(4px, 0.7vw, 8px);
+}
+
+.project-detail-body .rail-nav {
+  gap: 0.55rem;
+}
+
+.project-detail-body .nav-link {
+  color: rgba(23, 23, 23, 0.54);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: clamp(0.78rem, 1.1vw, 0.86rem);
+  letter-spacing: 0.01em;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-color: transparent;
+}
+
+.project-detail-body .nav-link.is-active {
+  color: var(--text);
+  text-decoration-color: currentColor;
+}
+
+.detail-page-main {
+  padding: 0 clamp(0.75rem, 2vw, 1.5rem) 0 0;
+}
+
+.mintmarket-page {
+  width: min(100%, 980px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 3.5vw, 3rem);
+}
+
+.mintmarket-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mintmarket-hero {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.mintmarket-team {
+  margin: 0;
+  text-align: right;
+  color: var(--text);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.2;
+}
+
+.mintmarket-story {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.38fr) minmax(0, 0.62fr);
+  gap: clamp(1rem, 1.8vw, 1.35rem);
+  align-items: start;
+}
+
+.mintmarket-story-main {
+  display: grid;
+  gap: clamp(1rem, 1.8vw, 1.5rem);
+}
+
+.mintmarket-copy {
+  padding: clamp(0.4rem, 0.8vw, 0.7rem) 0 0 0.2rem;
+}
+
+.mintmarket-copy p {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.16rem, 1.72vw, 1.44rem);
+  line-height: 1.38;
+}
+
+.mintmarket-copy p + p {
+  margin-top: clamp(1.2rem, 1.8vw, 1.8rem);
+}
+
+.mintmarket-copy .accent {
+  color: #4c9f21;
+}
+
+.mintmarket-ui-strip,
+.mintmarket-cycle {
+  width: 100%;
+}
+
+.mintmarket-footer {
+  display: flex;
+  justify-content: center;
+  padding: clamp(0.8rem, 1.6vw, 1.4rem) 0 0.5rem;
+}
+
+.mintmarket-footer img {
+  width: clamp(56px, 6vw, 74px);
+}
+
+.moodish-detail-body {
+  font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+}
+
+.moodish-detail-body .nav-link {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.moodish-page {
+  width: min(100%, 920px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.3rem, 3.6vw, 3.4rem);
+  color: #121212;
+}
+
+.moodish-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.moodish-hero {
+  width: 100%;
+}
+
+.moodish-challenge {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: clamp(2.6rem, 4vw, 4.6rem);
+  align-items: center;
+  padding: 0 clamp(2.6rem, 4.2vw, 3.6rem) 0 clamp(2.8rem, 4.4vw, 3.9rem);
+}
+
+.moodish-challenge-art {
+  justify-self: center;
+  width: min(100%, 205px);
+}
+
+.moodish-challenge-copy {
+  max-width: 395px;
+}
+
+.moodish-challenge-copy h2,
+.moodish-features h2 {
+  margin: 0 0 1.2rem;
+  font-size: clamp(1.7rem, 2.35vw, 2.05rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+
+.moodish-challenge-copy p,
+.moodish-feature-copy p {
+  margin: 0;
+  font-size: clamp(1rem, 1.15vw, 1.08rem);
+  line-height: 1.45;
+}
+
+.moodish-challenge-copy p + p {
+  margin-top: 0.18rem;
+}
+
+.moodish-quote {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.moodish-quote p,
+.moodish-quote span {
+  margin: 0;
+  font-size: clamp(0.94rem, 1.08vw, 1rem);
+  line-height: 1.45;
+}
+
+.moodish-quote span {
+  display: block;
+}
+
+.moodish-features {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.2rem, 3.5vw, 3.5rem);
+  padding: 0 1.2rem 0 1.25rem;
+}
+
+.moodish-features h2 {
+  margin-bottom: 0;
+}
+
+.moodish-feature-row {
+  display: grid;
+  align-items: center;
+}
+
+.moodish-feature-row-top {
+  grid-template-columns: 265px minmax(0, 1fr);
+  gap: clamp(3.8rem, 6vw, 6.8rem);
+}
+
+.moodish-feature-row-bottom {
+  grid-template-columns: minmax(0, 1fr) 235px;
+  gap: clamp(2rem, 3.4vw, 3.8rem);
+  align-items: end;
+}
+
+.moodish-feature-art-left {
+  width: min(100%, 175px);
+  justify-self: center;
+}
+
+.moodish-feature-art-right {
+  width: min(100%, 215px);
+  justify-self: end;
+}
+
+.moodish-feature-copy {
+  color: #111111;
+}
+
+.moodish-feature-copy h3,
+.moodish-insight-card h3 {
+  margin: 0 0 0.24rem;
+  font-size: clamp(1.12rem, 1.22vw, 1.22rem);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.moodish-feature-copy-right {
+  max-width: 320px;
+  justify-self: start;
+  padding-top: 1.15rem;
+}
+
+.moodish-feature-copy-center {
+  max-width: 520px;
+  justify-self: center;
+  text-align: center;
+  padding-top: 0.75rem;
+}
+
+.moodish-insights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.6rem, 2vw, 2.3rem);
+  padding: clamp(1.3rem, 1.9vw, 1.8rem) 0 0;
+}
+
+.moodish-insight-card {
+  text-align: center;
+}
+
+.moodish-insight-card p {
+  margin: 0;
+  font-size: clamp(0.8rem, 0.92vw, 0.9rem);
+  line-height: 1.5;
+}
+
+.moodish-gallery {
+  padding-top: clamp(0.35rem, 0.8vw, 0.6rem);
+}
+
+.can-detail-body {
+  font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+}
+
+.can-detail-body .nav-link {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.can-page {
+  width: min(100%, 890px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.7rem, 3vw, 2.6rem);
+  color: #151515;
+}
+
+.can-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.can-hero {
+  width: 100%;
+}
+
+.can-intro {
+  display: grid;
+  justify-items: center;
+  gap: 0.85rem;
+  text-align: center;
+}
+
+.can-intro h2,
+.can-details-header h2 {
+  margin: 0;
+  font-size: clamp(1.95rem, 3vw, 2.65rem);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+.can-intro p {
+  max-width: 710px;
+  margin: 0;
+  font-size: clamp(0.94rem, 1.12vw, 1.02rem);
+  line-height: 1.45;
+}
+
+.can-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 0.82fr);
+  gap: clamp(1.7rem, 3vw, 2.7rem);
+  align-items: center;
+}
+
+.can-showcase-main,
+.can-showcase-side {
+  margin: 0;
+}
+
+.can-details {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.35rem, 2.4vw, 2rem);
+}
+
+.can-details-header {
+  display: grid;
+  justify-items: start;
+}
+
+.can-flavor-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  column-gap: clamp(2rem, 6vw, 7rem);
+  row-gap: 1rem;
+}
+
+.can-flavor-copy {
+  display: grid;
+  justify-items: center;
+  gap: 0.45rem;
+  text-align: center;
+}
+
+.can-flavor-copy h3 {
+  margin: 0;
+  font-size: clamp(1.65rem, 2.2vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.can-flavor-copy p {
+  max-width: 290px;
+  margin: 0;
+  font-size: clamp(0.8rem, 0.96vw, 0.88rem);
+  line-height: 1.45;
+  color: rgba(21, 21, 21, 0.82);
+}
+
+.can-flavor-copy-left {
+  justify-self: start;
+}
+
+.can-flavor-copy-right {
+  justify-self: end;
+}
+
+.can-flavor-assets {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  align-items: end;
+  gap: clamp(1rem, 1.5vw, 1.25rem);
+}
+
+.can-flavor-assets-left {
+  justify-self: start;
+}
+
+.can-flavor-assets-right {
+  justify-self: end;
+}
+
+.can-flavor-can {
+  width: clamp(84px, 9vw, 110px);
+}
+
+.can-flavor-poster {
+  width: clamp(112px, 11vw, 140px);
+}
+
+.can-flavor-icon {
+  object-fit: contain;
+}
+
+.can-flavor-icon-apple {
+  width: min(100%, 215px);
+}
+
+.can-flavor-icon-pear {
+  width: min(100%, 175px);
+}
+
+.can-flavor-icon-peach {
+  width: min(100%, 200px);
+}
+
+.can-flavor-icon-grape {
+  width: min(100%, 175px);
+}
+
+.petbrand-detail-body {
+  font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+}
+
+.petbrand-detail-body .nav-link {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.petbrand-page {
+  width: min(100%, 835px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.45rem;
+  color: #111111;
+}
+
+.petbrand-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.petbrand-hero,
+.petbrand-story-image,
+.petbrand-window-image,
+.petbrand-package-cans,
+.petbrand-package-cup,
+.petbrand-package-stickers,
+.petbrand-package-menu,
+.petbrand-package-shirt,
+.petbrand-outcome-card,
+.petbrand-poster-circle {
+  margin: 0;
+}
+
+.petbrand-story {
+  display: grid;
+  grid-template-columns: 304px 1fr;
+  gap: 0.95rem;
+  align-items: start;
+}
+
+.petbrand-story-copy {
+  display: grid;
+  gap: 0.95rem;
+  padding-top: 0.9rem;
+}
+
+.petbrand-story-copy p {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+.petbrand-window-poster {
+  display: grid;
+  grid-template-columns: 1fr 236px;
+  gap: 0.95rem;
+  align-items: center;
+}
+
+.petbrand-poster-circle {
+  display: grid;
+  place-items: center;
+  width: 236px;
+  min-height: 236px;
+  padding: 0.5rem;
+  justify-self: end;
+  border-radius: 50%;
+  background: #f2f2f2;
+}
+
+.petbrand-poster-circle img {
+  width: 82%;
+  max-width: 182px;
+  height: auto;
+}
+
+.petbrand-package,
+.petbrand-outcome {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.petbrand-section-heading {
+  margin: 0;
+}
+
+.petbrand-section-heading h2 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(3rem, 4.5vw, 3.95rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.petbrand-section-heading-right {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0;
+  margin-top: 0.1rem;
+}
+
+.petbrand-package-top {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 0.95rem;
+  align-items: end;
+}
+
+.petbrand-package-bottom {
+  display: grid;
+  grid-template-columns: 166px 126px 252px;
+  gap: 0.95rem;
+  align-items: end;
+}
+
+.petbrand-package-stickers {
+  width: 166px;
+}
+
+.petbrand-package-menu {
+  width: 126px;
+}
+
+.petbrand-package-shirt {
+  width: 252px;
+  justify-self: end;
+}
+
+.petbrand-outcome-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.95rem;
+}
+
+.childrensbook-detail-body {
+  font-family: "Cormorant Garamond", serif;
+}
+
+.childrensbook-page {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.9rem, 1.55vw, 1.3rem);
+  padding-top: clamp(0.3rem, 0.8vw, 0.7rem);
+}
+
+.childrensbook-cover,
+.childrensbook-spread-group {
+  width: 100%;
+  margin: 0;
+}
+
+.childrensbook-cover {
+  width: min(100%, 1125px);
+}
+
+.childrensbook-spread-group {
+  width: min(100%, 1010px);
+}
+
+.childrensbook-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.childrensbook-spread-group-top {
+  width: min(100%, 1140px);
+  margin-top: clamp(0.55rem, 1.3vw, 1rem);
+}
+
+.childrensbook-spread-group-bottom {
+  margin-top: clamp(0.2rem, 0.7vw, 0.45rem);
+}
+
+.avantgarde-detail-body {
+  font-family: "Cormorant Garamond", serif;
+}
+
+.avantgarde-page {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1rem, 1.7vw, 1.45rem);
+  padding-top: clamp(0.35rem, 0.9vw, 0.75rem);
+}
+
+.avantgarde-hero,
+.avantgarde-gallery,
+.avantgarde-final-spread {
+  margin: 0;
+}
+
+.avantgarde-hero,
+.avantgarde-final-spread {
+  width: min(100%, 1040px);
+}
+
+.avantgarde-gallery {
+  width: min(100%, 1085px);
+  margin-top: clamp(0.6rem, 1.35vw, 1.05rem);
+}
+
+.avantgarde-final-spread {
+  align-self: flex-start;
+  margin-top: clamp(0.15rem, 0.55vw, 0.35rem);
+}
+
+.avantgarde-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.neuroma-detail-body {
+  font-family: "Cormorant Garamond", serif;
+}
+
+.neuroma-page {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding-top: 0;
+}
+
+.neuroma-hero,
+.neuroma-system,
+.neuroma-lifestyle,
+.neuroma-inserts {
+  margin: 0;
+}
+
+.neuroma-hero {
+  width: min(100%, 900px);
+}
+
+.neuroma-copy {
+  width: min(100%, 660px);
+  margin-top: 1.2rem;
+  color: #1f1b17;
+  font-size: 0.82rem;
+  line-height: 1.16;
+  text-align: center;
+}
+
+.neuroma-copy p {
+  margin: 0;
+}
+
+.neuroma-copy p + p {
+  margin-top: 0.55rem;
+}
+
+.neuroma-system {
+  width: min(100%, 720px);
+  margin-top: 1.15rem;
+}
+
+.neuroma-lifestyle-wide {
+  width: min(100%, 900px);
+  margin-top: 1.9rem;
+}
+
+.neuroma-inserts {
+  width: min(100%, 430px);
+  align-self: flex-start;
+  margin-top: 2.15rem;
+  margin-left: 8.5rem;
+}
+
+.neuroma-inserts-note {
+  width: 300px;
+  align-self: flex-end;
+  margin-top: -6.2rem;
+  margin-right: 12.6rem;
+  color: #1f1b17;
+}
+
+.neuroma-inserts-note h2 {
+  margin: 0 0 0.25rem;
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.neuroma-inserts-note p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.24;
+}
+
+.neuroma-lifestyle-right,
+.neuroma-lifestyle-left {
+  width: min(100%, 520px);
+}
+
+.neuroma-lifestyle-right {
+  align-self: flex-end;
+  margin-top: 1.35rem;
+}
+
+.neuroma-lifestyle-left {
+  align-self: flex-start;
+  margin-top: 2.6rem;
+  margin-left: 5.6rem;
+}
+
+.neuroma-lifestyle-last {
+  margin-top: 1.3rem;
+}
+
+.neuroma-candle-row {
+  display: flex;
+  align-items: start;
+  flex-wrap: nowrap;
+  width: min(100%, 960px);
+}
+
+.neuroma-candle-row-right {
+  justify-content: flex-end;
+  gap: 2.3rem;
+  margin-top: 1.35rem;
+}
+
+.neuroma-candle-row-left {
+  justify-content: flex-start;
+  gap: 2.3rem;
+  margin-top: 2.6rem;
+  padding-left: 5.6rem;
+  box-sizing: border-box;
+}
+
+.neuroma-candle-row-last {
+  margin-top: 1.3rem;
+}
+
+.neuroma-candle-row .neuroma-lifestyle {
+  align-self: start;
+  margin-top: 0;
+  margin-left: 0;
+  flex: 0 0 auto;
+}
+
+.neuroma-candle-note {
+  color: #1f1b17;
+  width: 220px;
+  flex: 0 0 220px;
+  font-size: 0.78rem;
+  line-height: 1.24;
+}
+
+.neuroma-candle-note-lowered {
+  align-self: flex-end;
+  margin-top: 0;
+  margin-bottom: 0.2rem;
+}
+
+.neuroma-candle-note h2 {
+  margin: 0 0 0.24rem;
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.neuroma-candle-note p {
+  margin: 0;
+}
+
+.neuroma-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.booklet-detail-body {
+  font-family: "Cormorant Garamond", serif;
+}
+
+.booklet-page {
+  width: min(100%, 980px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding-top: clamp(0.1rem, 0.4vw, 0.25rem);
+}
+
+.booklet-row {
+  display: grid;
+  align-items: start;
+}
+
+.booklet-row figure {
+  margin: 0;
+}
+
+.booklet-row img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.booklet-row-hero {
+  grid-template-columns: 334px 424px;
+  column-gap: 2rem;
+  align-items: center;
+}
+
+.booklet-cover-card {
+  width: 334px;
+  justify-self: start;
+}
+
+.booklet-cover-card img {
+  transform: rotate(-10.5deg);
+  transform-origin: center;
+}
+
+.booklet-hero-wide,
+.booklet-wide-card {
+  width: 424px;
+}
+
+.booklet-row-wide {
+  grid-template-columns: repeat(2, 424px);
+  column-gap: 0.85rem;
+}
+
+.booklet-row-portraits {
+  grid-template-columns: repeat(3, 254px);
+  column-gap: 0.85rem;
+}
+
+.booklet-tall-card {
+  width: 254px;
+}
+
+.booklet-row-trees {
+  grid-template-columns: repeat(2, 254px);
+  column-gap: 0.85rem;
+  justify-content: start;
+}
+
+.booklet-tree-card {
+  width: 254px;
+}
+
+@media (max-width: 900px) {
   .site-frame {
     grid-template-columns: 1fr;
     width: 100%;
@@ -375,16 +1883,31 @@ a {
   }
 
   .rail-nav {
-    grid-auto-flow: column;
+    flex-direction: row;
+    align-items: center;
     gap: 1rem;
+  }
+
+  .rail-subnav {
+    max-height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
 
   .page {
     padding: 0 1.25rem 2rem;
   }
 
+  .work-view {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
   .layout-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    padding-right: 0;
     max-width: none;
   }
 
@@ -393,12 +1916,278 @@ a {
   }
 
   .project-slot,
-  .intro-block,
   .tag-block {
     grid-column: auto;
     grid-row: auto;
   }
 
+  .intro-block {
+    position: static;
+    order: -1;
+    max-width: min(100%, 34rem);
+    padding: 0 0 1.5rem;
+  }
+
+  .intro-block p {
+    max-width: none;
+  }
+
+  .other-page,
+  .other-row-4,
+  .other-row-3,
+  .other-row-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .other-row-2 .other-card {
+    grid-column: auto;
+  }
+
+  .other-feature-row {
+    grid-template-columns: 1fr;
+  }
+
+  .design-system-grid,
+  .design-poster-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ip-showcase-row,
+  .ip-merch-row,
+  .ip-coming-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ip-note {
+    padding-top: 0.6rem;
+    padding-right: 0;
+    text-align: right;
+  }
+
+  .design-color-grid,
+  .design-album-grid,
+  .ip-merch-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .design-project-caption {
+    width: min(100%, 16rem);
+  }
+
+  .project-detail-body .site-frame {
+    grid-template-columns: 1fr;
+    padding-left: clamp(12px, 3vw, 18px);
+    padding-right: clamp(12px, 3vw, 18px);
+  }
+
+  .project-detail-body .left-rail {
+    padding: 1rem 1rem 0;
+  }
+
+  .detail-page-main {
+    padding-right: 0;
+  }
+
+  .mintmarket-page {
+    width: min(100%, 780px);
+  }
+
+  .mintmarket-story {
+    grid-template-columns: 1fr;
+  }
+
+  .mintmarket-copy {
+    padding-left: 0;
+  }
+
+  .moodish-page {
+    width: min(100%, 840px);
+  }
+
+  .moodish-challenge,
+  .moodish-feature-row-top,
+  .moodish-feature-row-bottom,
+  .moodish-insights {
+    grid-template-columns: 1fr;
+  }
+
+  .moodish-challenge,
+  .moodish-features {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .moodish-challenge-art,
+  .moodish-feature-art-left,
+  .moodish-feature-art-right {
+    justify-self: center;
+  }
+
+  .moodish-challenge-copy,
+  .moodish-feature-copy-right,
+  .moodish-feature-copy-center {
+    max-width: none;
+    justify-self: stretch;
+    padding-top: 0;
+    text-align: left;
+  }
+
+  .moodish-insight-card {
+    text-align: left;
+  }
+
+  .can-page {
+    width: min(100%, 760px);
+  }
+
+  .can-showcase,
+  .can-flavor-row {
+    grid-template-columns: 1fr;
+  }
+
+  .can-details-header {
+    justify-items: center;
+  }
+
+  .can-flavor-copy,
+  .can-flavor-copy-left,
+  .can-flavor-copy-right,
+  .can-flavor-assets,
+  .can-flavor-assets-left,
+  .can-flavor-assets-right {
+    justify-self: center;
+  }
+
+  .petbrand-page {
+    width: min(100%, 760px);
+  }
+
+  .childrensbook-page,
+  .childrensbook-cover,
+  .childrensbook-spread-group {
+    width: 100%;
+  }
+
+  .avantgarde-page,
+  .avantgarde-hero,
+  .avantgarde-gallery,
+  .avantgarde-final-spread {
+    width: 100%;
+  }
+
+  .neuroma-page,
+  .neuroma-hero,
+  .neuroma-copy,
+  .neuroma-system,
+  .neuroma-lifestyle,
+  .neuroma-inserts,
+  .neuroma-inserts-note {
+    width: 100%;
+  }
+
+  .booklet-page {
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .booklet-row-hero,
+  .booklet-row-wide,
+  .booklet-row-portraits,
+  .booklet-row-trees {
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+    row-gap: 1rem;
+  }
+
+  .booklet-cover-card,
+  .booklet-hero-wide,
+  .booklet-wide-card,
+  .booklet-tall-card,
+  .booklet-tree-card {
+    width: 100%;
+  }
+
+  .booklet-cover-card img {
+    transform: none;
+  }
+
+  .about-panel {
+    grid-template-columns: 1fr;
+    row-gap: 1.5rem;
+    padding-top: 0.8rem;
+  }
+
+  .about-copy p {
+    max-width: none;
+  }
+
+  .about-contact {
+    margin-top: 1.6rem;
+  }
+
+  .about-portrait {
+    width: min(100%, 330px);
+  }
+
+  .neuroma-candle-row {
+    width: 100%;
+    display: grid;
+  }
+
+  .neuroma-candle-row-right,
+  .neuroma-candle-row-left {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    padding-left: 0;
+    justify-content: stretch;
+  }
+
+  .neuroma-inserts,
+  .neuroma-lifestyle-left,
+  .neuroma-lifestyle-right {
+    align-self: stretch;
+    margin-left: 0;
+  }
+
+  .neuroma-inserts-note {
+    align-self: stretch;
+    margin-top: 0.9rem;
+    margin-right: 0;
+  }
+
+  .neuroma-candle-note {
+    width: 100%;
+    flex: none;
+  }
+
+  .neuroma-candle-note-lowered {
+    margin-top: 0;
+  }
+
+  .petbrand-story,
+  .petbrand-window-poster,
+  .petbrand-package-top,
+  .petbrand-package-bottom,
+  .petbrand-outcome-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .petbrand-poster-circle,
+  .petbrand-package-shirt {
+    justify-self: center;
+  }
+
+  .petbrand-poster-circle,
+  .petbrand-package-stickers,
+  .petbrand-package-menu,
+  .petbrand-package-shirt {
+    width: min(100%, 236px);
+  }
+
+  .petbrand-section-heading-right {
+    justify-content: flex-start;
+    padding-right: 0;
+  }
 }
 
 @media (max-width: 700px) {
@@ -413,7 +2202,14 @@ a {
   }
 
   .layout-grid,
-  .mini-grid {
+  .mini-grid,
+  .other-row-4,
+  .other-row-3,
+  .other-row-2,
+  .other-feature-row,
+  .design-color-grid,
+  .design-album-grid,
+  .ip-merch-grid {
     grid-template-columns: 1fr;
     row-gap: 2.5rem;
   }
@@ -428,5 +2224,132 @@ a {
 
   .project-tile img {
     transform: none;
+  }
+
+  .other-dogs-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "sketch"
+      "object"
+      "process";
+  }
+
+  .ip-intro p {
+    max-width: 100%;
+  }
+
+  .project-detail-body .rail-nav {
+    gap: 1rem;
+  }
+
+  .project-detail-body .nav-link {
+    font-size: clamp(0.78rem, 1.1vw, 0.86rem);
+  }
+
+  .mintmarket-page {
+    gap: 1.7rem;
+  }
+
+  .mintmarket-team {
+    text-align: left;
+  }
+
+  .mintmarket-copy p {
+    font-size: 1.02rem;
+    line-height: 1.45;
+  }
+
+  .moodish-page {
+    gap: 1.8rem;
+  }
+
+  .moodish-challenge-copy h2,
+  .moodish-features h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .moodish-feature-copy h3,
+  .moodish-insight-card h3 {
+    font-size: 0.95rem;
+  }
+
+  .can-page {
+    gap: 1.6rem;
+  }
+
+  .can-intro h2,
+  .can-details-header h2,
+  .can-flavor-copy h3 {
+    font-size: 1.65rem;
+  }
+
+  .can-intro p,
+  .can-flavor-copy p {
+    font-size: 0.88rem;
+  }
+
+  .can-flavor-assets {
+    gap: 0.75rem;
+  }
+
+  .can-flavor-icon-apple {
+    width: min(100%, 170px);
+  }
+
+  .can-flavor-icon-pear,
+  .can-flavor-icon-grape {
+    width: min(100%, 145px);
+  }
+
+  .can-flavor-icon-peach {
+    width: min(100%, 155px);
+  }
+
+  .petbrand-page {
+    gap: 1.35rem;
+  }
+
+  .childrensbook-page {
+    gap: 1rem;
+  }
+
+  .avantgarde-page {
+    gap: 1rem;
+  }
+
+  .neuroma-copy {
+    margin-top: 1rem;
+    font-size: 0.84rem;
+  }
+
+  .neuroma-system,
+  .neuroma-lifestyle-wide,
+  .neuroma-inserts,
+  .neuroma-candle-row-right,
+  .neuroma-candle-row-left,
+  .neuroma-lifestyle-right,
+  .neuroma-lifestyle-left,
+  .neuroma-candle-row-last,
+  .neuroma-lifestyle-last {
+    margin-top: 0.9rem;
+  }
+
+  .petbrand-section-heading h2 {
+    font-size: 2.4rem;
+  }
+
+  .petbrand-story-copy p {
+    font-size: 0.86rem;
+  }
+
+  .petbrand-poster-circle {
+    width: min(100%, 220px);
+  }
+
+  .petbrand-package-stickers,
+  .petbrand-package-menu,
+  .petbrand-package-shirt {
+    width: min(100%, 220px);
   }
 }
